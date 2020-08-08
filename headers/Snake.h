@@ -15,6 +15,7 @@ using std::cout;
 class Snake {
 
 public:
+    static const int IDLE = -1;
     static const int UP = 0;
     static const int DOWN = 1;
     static const int LEFT = 2;
@@ -26,8 +27,8 @@ private:
     int headX;
     int headY;
 
-    int movingDirection = DOWN;
     int direction = DOWN;
+    int input = IDLE;
 
     int head;
     int tail;
@@ -43,7 +44,7 @@ public:
 
     int getHead();
 
-    int getSnake(int snakePart);
+    int getSnakeCell(int cell);
 
     int getTail();
 
@@ -59,7 +60,7 @@ public:
 
     void pollEvents(SDL_Event &event);
 
-    void updateDirection(int direction);
+    void updateDirection();
 
     void reset();
 

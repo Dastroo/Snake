@@ -31,14 +31,14 @@ bool Window::create() {
             0);
 
     if (window == nullptr) {
-        cerr << "Window -> failed to create window.\n";
+        cerr << "Window::create -> failed to create window.\n";
         return false;
     }
 
     //  creates renderer
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     if (renderer == nullptr) {
-        cerr << "Window -> failed to create renderer.\n";
+        cerr << "Window::create -> failed to create renderer.\n";
         return false;
     }
 
@@ -48,17 +48,17 @@ bool Window::create() {
 bool Window::init() {
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        cerr << "Window -> failed to initialize SDL_video\n";
+        cerr << "Window::init -> failed to initialize SDL_video\n";
         return false;
     }
 
     if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG) {
-        cerr << "Window -> failed to initialize SDL_image.\n";
+        cerr << "Window::init -> failed to initialize SDL_image.\n";
         return false;
     }
 
     if (TTF_Init() == -1) {
-        cerr << "Window -> failed to initialize SDL_ttf.\n";
+        cerr << "Window::init -> failed to initialize SDL_ttf.\n";
         return false;
     }
 
@@ -71,16 +71,16 @@ void Window::pollEvents(SDL_Event &event) {
     switch (event.type) {
         case SDL_QUIT:
             closed = true;
-            cout << "Window -> you clicked window \'x\'!\n";
+            cout << "Window::pollEvents -> you clicked window \'x\'!\n";
             break;
         case SDL_KEYDOWN:
             switch (event.key.keysym.sym) {
                 case SDLK_ESCAPE:
-                    cout << "Window -> you clicked \'esc\'!\n";
                     closed = true;
+                    cout << "Window::pollEvents -> you clicked \'esc\'!\n";
                     break;
                 case SDLK_f:
-                    cout << "Window -> you clicked \'f\'!\n";
+                    cout << "Window::pollEvents -> you clicked \'f\'!\n";
                     break;
 
                 default:

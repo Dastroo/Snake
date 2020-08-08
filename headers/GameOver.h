@@ -6,21 +6,21 @@
 #define SNAKE_GAMEOVER_H
 
 #include "Snake.h"
-#include "TextView.h"
-#include "NewGameInterface.h"
+#include "Text.h"
+#include "GameInterface.h"
 
 class GameOver {
 
 public:
 
 private:
-    TextView *scoreTV;
-    TextView *newGameTV;
-    TextView *quitTV;
-    NewGameInterface *listener;
+    Text *scoreTV;
+    Text *newGameTV;
+    Text *quitTV;
+    GameInterface *listener;
 
 public:
-    GameOver(NewGameInterface &listener);
+    GameOver(GameInterface &listener);
 
     virtual ~GameOver();
 

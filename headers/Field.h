@@ -5,9 +5,9 @@
 #ifndef SNAKE_FIELD_H
 #define SNAKE_FIELD_H
 
-#include "View.h"
+#include "Rect.h"
 
-class Field : public View {
+class Field : public Rect {
 
 public:
     static const int EMPTY = 0;

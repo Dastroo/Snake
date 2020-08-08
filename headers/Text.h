@@ -2,11 +2,11 @@
 // Created by dawid on 23.11.2019.
 //
 
-#ifndef SNAKE_TEXTVIEW_H
-#define SNAKE_TEXTVIEW_H
+#ifndef SNAKE_TEXT_H
+#define SNAKE_TEXT_H
 
 
-#include "View.h"
+#include "Rect.h"
 #include <SDL2/SDL_render.h>
 #include <SDL2/SDL_ttf.h>
 #include <iostream>
@@ -16,10 +16,10 @@ using String = std::string;
 using std::cerr;
 
 
-class TextView : public View {
+class Text : public Rect {
 
 private:
-    String text = "TextView";
+    String text = "Text";
     String fontPath = "res/Ubuntu-M.ttf";
     int fontSize = 24;
     SDL_Color color = {255, 255, 255, 255};
@@ -30,11 +30,11 @@ private:
 
 
 public:
-    TextView();
+    Text();
 
-    explicit TextView(String text);
+    explicit Text(String text);
 
-    virtual ~TextView() override;
+    virtual ~Text() override;
 
     void draw() override;
 
@@ -53,4 +53,4 @@ private:
 };
 
 
-#endif //SNAKE_TEXTVIEW_H
+#endif //SNAKE_TEXT_H

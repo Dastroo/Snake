@@ -2,15 +2,15 @@
 // Created by dawid on 23.11.2019.
 //
 
-#ifndef SNAKE_VIEW_H
-#define SNAKE_VIEW_H
+#ifndef SNAKE_RECT_H
+#define SNAKE_RECT_H
 
 #include <SDL2/SDL_rect.h>
 #include <SDL2/SDL_events.h>
 #include <SDL2/SDL_render.h>
 #include "../headers/Window.h"
 
-class View {
+class Rect {
 
 public:
 
@@ -24,11 +24,11 @@ private:
     int r = 255, g = 255, b = 255, transparency = 255;
 
 public:
-    View(int width, int height);
+    Rect(int width, int height);
 
-    View(int positionX, int positionY, int width, int height);
+    Rect(int positionX, int positionY, int width, int height);
 
-    virtual ~View();
+    virtual ~Rect();
 
     virtual void draw();
 
@@ -46,4 +46,4 @@ public:
 };
 
 
-#endif //SNAKE_VIEW_H
+#endif //SNAKE_RECT_H

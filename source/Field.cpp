@@ -5,7 +5,7 @@
 #include "../headers/Field.h"
 
 Field::Field(int fieldSize, int id)
-        : View(fieldSize, fieldSize), id(id) {
+        : Rect(fieldSize, fieldSize), id(id) {
     setFieldTo(EMPTY);
 }
 
@@ -37,7 +37,7 @@ void Field::setFieldTo(int FLAG) {
             setColor(white);
             break;
         default:
-            std::cerr << "Field -> failed at setting type.\n";
+            std::cerr << "Field::setFieldTo -> failed at setting type.\n";
     }
 }
 

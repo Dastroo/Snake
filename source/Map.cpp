@@ -57,6 +57,8 @@ void Map::draw() {
     for (int i = 0; i < 3600; ++i) {
         map[i]->draw();
     }
+
+
 }
 
 Field *Map::getMapOn(int fieldId) {

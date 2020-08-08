@@ -3,32 +3,32 @@
 //
 
 
-#include "../headers/View.h"
+#include "../headers/Rect.h"
 
 
-View::View(int width, int height)
+Rect::Rect(int width, int height)
         : width(width), height(height) {
 }
 
-View::View(int positionX, int positionY, int width, int height)
+Rect::Rect(int positionX, int positionY, int width, int height)
         : positionX(positionX), positionY(positionY), width(width), height(height) {
 }
 
-View::~View() {
+Rect::~Rect() {
 
 }
 
-void View::setColor(const int *color) {
+void Rect::setColor(const int *color) {
     r = color[0];
     g = color[1];
     b = color[2];
 }
 
-void View::setTransparency(int transparency) {
+void Rect::setTransparency(int transparency) {
     this->transparency = transparency;
 }
 
-void View::draw() {
+void Rect::draw() {
     rect = {positionX, positionY, width, height};
 
     SDL_SetRenderDrawBlendMode(Window::renderer, SDL_BLENDMODE_BLEND);
@@ -36,20 +36,20 @@ void View::draw() {
     SDL_RenderFillRect(Window::renderer, &rect);
 }
 
-void View::setPosition(int positionX, int positionY) {
+void Rect::setPosition(int positionX, int positionY) {
     this->positionX = positionX;
     this->positionY = positionY;
 }
 
-void View::setSize(int width, int height) {
+void Rect::setSize(int width, int height) {
     this->width = width;
     this->height = height;
 }
 
-int View::getWidth() {
+int Rect::getWidth() {
     return width;
 }
 
-void View::pollEvents(SDL_Event &event) {
+void Rect::pollEvents(SDL_Event &event) {
 
 }

@@ -20,8 +20,10 @@ Game::Game() {
             iterator++;
         }
     }
-    snake.attachToMap(map);
-    snake.setListener(*this);
+
+    snake = new Snake();
+    snake->attachToMap(map);
+    snake->setListener(*this);
 }
 
 Game::~Game() {
@@ -41,7 +43,6 @@ void Game::launchGame() {
 
 void Game::newGame() {
     over = false;
-    snake.reset();
 
     //  create new score board
     if (gameOverScreen)
@@ -62,14 +63,15 @@ void Game::gameLoop() {
 
         pollEvents();
 
-        if (++frameCount == snakeSpeed) {
-            frameCount = 0;
-            update();
-        }
+        if (!over)
+            if (++frameCount == snakeSpeed) {
+                frameCount = 0;
+                update();
+            }
 
         render();
 
-        Millisec timespan(5);
+        Millisec timespan(2);
         sleep_for(timespan);
     }
 }
@@ -86,14 +88,14 @@ void Game::pollEvents() {
             gameOverScreen->pollEvents(event);
         else
             //  get input for snake
-            snake.pollEvents(event);
+            snake->pollEvents(event);
     }
 }
 
 void Game::update() {
 
-    snake.updateDirection(moving);
-    snake.updatePosition();
+    snake->updateDirection();
+    snake->updatePosition();
 
     checkTargetFieldType();
     updateSnakePosOnMap();
@@ -101,16 +103,16 @@ void Game::update() {
 
 void Game::checkTargetFieldType() {
 
-    int snakeHeadPosition = snake.getHead();
+    int snakeHeadPosition = snake->getHead();
 
     auto field = snakeMap->getMapOn(snakeHeadPosition);
     switch (field->getType()) {
         case Field::EMPTY:
-            snake.move();
+            snake->move();
             break;
 
         case Field::APPLE:
-            snake.grow();
+            snake->grow();
             snakeMap->generateNewApple();
             break;
 
@@ -120,20 +122,19 @@ void Game::checkTargetFieldType() {
             break;
 
         default:
-            std::cerr << "Game -> unknown field type.\n";
+            std::cerr << "Game::checkTargetFieldType -> unknown field type.\n";
     }
 }
 
 void Game::updateSnakePosOnMap() {
-    snakeMap->updateMap(snake.getHead(), Field::SNAKE);
-    snakeMap->updateMap(snake.getTail(), Field::EMPTY);
+    snakeMap->updateMap(snake->getHead(), Field::SNAKE);
+    snakeMap->updateMap(snake->getTail(), Field::EMPTY);
 }
 
 void Game::render() {
     if (over)
         gameOverScreen->draw();
     else
-        //  draw everything
         snakeMap->draw();
 
     window->clear();
@@ -141,15 +142,15 @@ void Game::render() {
 
 void Game::onChanged(int input) {
 
-//    if (input != moving) {
-//        update();
-//    }
-    moving = input;
 }
 
 void Game::gameOver() {
     over = true;
-    gameOverScreen->update(snake.getSize());
+    gameOverScreen->update(snake->getSize());
+}
+
+void Game::quitGame() {
+    window->close();
 }
 
 

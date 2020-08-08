@@ -43,6 +43,8 @@ public:
 
     inline bool isClosed() const { return closed; }
 
+    void close() { closed = true; }
+
 
 private:
     bool create();

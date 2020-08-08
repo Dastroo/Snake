@@ -3,21 +3,21 @@
 //
 
 #include "../headers/GameOver.h"
-#include "../headers/TextView.h"
+#include "../headers/Text.h"
 #include "../headers/Game.h"
 
-GameOver::GameOver(NewGameInterface &listener)
+GameOver::GameOver(GameInterface &listener)
         : listener(&listener) {
 
     int black[3] = {0, 0, 0};
 
-    scoreTV = new TextView();
+    scoreTV = new Text();
     scoreTV->setPosition(200, 200);
     scoreTV->setColor(black);
-    newGameTV = new TextView();
+    newGameTV = new Text();
     newGameTV->setPosition(200, 235);
     newGameTV->setColor(black);
-    quitTV = new TextView();
+    quitTV = new Text();
     quitTV->setPosition(230, 265);
     quitTV->setColor(black);
 }
@@ -39,8 +39,6 @@ void GameOver::update(int score) {
     scoreTV->setText("SCORE: " + std::to_string(score));
     newGameTV->setText("NEW GAME");
     quitTV->setText("QUIT");
-
-//    draw();
 }
 
 void GameOver::pollEvents(SDL_Event &event) {
@@ -49,6 +47,9 @@ void GameOver::pollEvents(SDL_Event &event) {
     int mouseY = event.motion.y;
 
     int NGWidth = newGameTV->getWidth();
+
+    if (event.key.keysym.sym == SDLK_SPACE)
+        listener->newGame();
 
     if (event.type == SDL_MOUSEBUTTONUP) {
         if (mouseX >= 200 &&
@@ -61,8 +62,7 @@ void GameOver::pollEvents(SDL_Event &event) {
             mouseX <= 230 + NGWidth &&
             mouseY >= 265 &&
             mouseY <= 265 + 25) {
-            //  put menu here
-
+            listener->quitGame();
         }
     }
 

@@ -3,20 +3,19 @@
 //
 
 
-#include "../headers/ImageView.h"
+#include "../headers/Image.h"
 
 
-ImageView::ImageView(int width, int height, const String &imagePath)
-        : View(width, height) {
+Image::Image(int width, int height, const String &imagePath)
+        : Rect(width, height) {
 
     if (imagePath.empty()) {
-        texture = nullptr;
-        return;
+        cerr << "Image::Image -> image path empty.\n";
     }
 
     auto surface = IMG_Load(imagePath.c_str());
     if (!surface) {
-        cerr << "ImageView -> failed to create surface.\n";
+        cerr << "Image::Image -> failed to create surface.\n";
         texture = nullptr;
         return;
     }
@@ -24,37 +23,41 @@ ImageView::ImageView(int width, int height, const String &imagePath)
     texture = SDL_CreateTextureFromSurface(Window::renderer, surface);
     SDL_FreeSurface(surface);
     if (!texture) {
-        cerr << "ImageView -> failed to create texture.\n";
+        cerr << "Image::Image -> failed to create texture.\n";
         return;
     }
 
     setTransparency(0);
 }
 
-void ImageView::draw() {
-    View::draw();
+Image::Image(int width, int height) : Rect(width, height) {
+
+}
+
+void Image::draw() {
+    Rect::draw();
     if (texture)
         SDL_RenderCopy(Window::renderer, texture, nullptr, &rect);
 }
 
-ImageView::~ImageView() {
+Image::~Image() {
     SDL_DestroyTexture(texture);
 }
 
-void ImageView::pollEvents(SDL_Event &event) {
-    View::pollEvents(event);
-
+void Image::pollEvents(SDL_Event &event) {
+    Rect::pollEvents(event);
 }
 
-void ImageView::setImage(const String &imagePath) {
+void Image::setImage(const String &imagePath) {
     auto surface = IMG_Load(imagePath.c_str());
     if (!surface) {
-        cerr << "ImageView -> failed to create surface.\n";
+        cerr << "Image::setImage -> failed to create surface.\n";
     }
 
     texture = SDL_CreateTextureFromSurface(Window::renderer, surface);
     if (!texture) {
-        cerr << "ImageView -> failed to create texture.\n";
+        cerr << "Image::setImage -> failed to create texture.\n";
     }
     SDL_FreeSurface(surface);
 }
+

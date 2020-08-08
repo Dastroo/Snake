@@ -11,14 +11,16 @@
 #include "GameOver.h"
 #include "Snake.h"
 #include "DirectionChangeListener.h"
-#include "NewGameInterface.h"
+#include "GameInterface.h"
 
 using std::this_thread::sleep_for;
 using Millisec = std::chrono::milliseconds;
 using String = std::string;
 using std::cout;
 
-class Game : public DirectionChangeListener, public NewGameInterface {
+//  TODO: add audio
+//  TODO: optimize by creating the board on the fly instead of all at once
+class Game : public DirectionChangeListener, public GameInterface {
 
 public:
 
@@ -26,12 +28,11 @@ private:
     Window *window;
     GameOver *gameOverScreen = nullptr;
     Map *snakeMap = nullptr;
-    Snake snake;
+    Snake *snake;
 
     int** map;
-    int snakeSpeed = 20;
+    int snakeSpeed = 40;
     int frameCount = 0;
-    int moving;
 
     bool over = false;
 
@@ -61,6 +62,7 @@ private:
 
     void newGame() override;
 
+    void quitGame() override;
 };
 
 

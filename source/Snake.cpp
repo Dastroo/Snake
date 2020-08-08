@@ -11,8 +11,8 @@ Snake::Snake() {
     snake = new int[size];
 
     //  snake starting coordinates
-    headX = 30;
-    headY = 30;
+    headX = 29;
+    headY = 29;
 
     //  snake head and tail
     head = snake[0];
@@ -24,8 +24,8 @@ Snake::~Snake() {
     delete snake;
 }
 
-int Snake::getSnake(int SnakePart) {
-    return snake[SnakePart];
+int Snake::getSnakeCell(int cell) {
+    return snake[cell];
 }
 
 int Snake::getHead() {
@@ -76,63 +76,61 @@ void Snake::pollEvents(SDL_Event &event) {
 
             case SDLK_w:
             case SDLK_UP:
-                direction = UP;
+                input = UP;
 
-                cout << "Game -> 'w'.\n";
+                cout << "Snake::pollEvents -> 'w'.\n";
                 break;
 
             case SDLK_s:
             case SDLK_DOWN:
-                direction = DOWN;
+                input = DOWN;
 
-                cout << "Game -> 's'.\n";
+                cout << "Snake::pollEvents -> 's'.\n";
                 break;
 
             case SDLK_a:
             case SDLK_LEFT:
-                direction = LEFT;
+                input = LEFT;
 
-                cout << "Game -> 'a'.\n";
+                cout << "Snake::pollEvents -> 'a'.\n";
                 break;
 
             case SDLK_d:
             case SDLK_RIGHT:
-                direction = RIGHT;
+                input = RIGHT;
 
-                cout << "Game -> 'd'.\n";
+                cout << "Snake::pollEvents -> 'd'.\n";
                 break;
 
             default:
                 break;
         }
-
-    listener->onChanged(direction);
 }
 
-void Snake::updateDirection(int direction) {
+void Snake::updateDirection() {
 
-    //  check if direction isn't opposite to the of the moving snake
-    switch (direction) {
+    //  check if input isn't opposite to the of the moving snake
+    switch (input) {
         case UP:
-            if (movingDirection != DOWN)
-                movingDirection = direction;
+            if (direction != DOWN)
+                direction = input;
             break;
         case DOWN:
-            if (movingDirection != UP)
-                movingDirection = direction;
+            if (direction != UP)
+                direction = input;
             break;
         case LEFT:
-            if (movingDirection != RIGHT)
-                movingDirection = direction;
+            if (direction != RIGHT)
+                direction = input;
             break;
 
         case RIGHT:
-            if (movingDirection != LEFT)
-                movingDirection = direction;
+            if (direction != LEFT)
+                direction = input;
             break;
 
         default:
-            std::cerr << "dupa\n";
+            break;
     }
 }
 
@@ -141,14 +139,14 @@ void Snake::updatePosition() {
     int xCount = 59;
     int yCount = 59;
 
-    switch (movingDirection) {
+    switch (direction) {
         case UP:
             headY = --headY;
             if (headY < 0)
                 headY = yCount;
             head = map[headY][headX];
 
-            cout << "snakeMove -> up.\n";
+            cout << "Snake::updatePosition -> up.\n";
             break;
 
         case DOWN:
@@ -157,7 +155,7 @@ void Snake::updatePosition() {
                 headY = 0;
             head = map[headY][headX];
 
-            cout << "snakeMove -> down.\n";
+            cout << "Snake::updatePosition -> down.\n";
             break;
 
         case LEFT:
@@ -166,7 +164,7 @@ void Snake::updatePosition() {
                 headX = xCount;
             head = map[headY][headX];
 
-            cout << "snakeMove -> left.\n";
+            cout << "Snake::updatePosition -> left.\n";
             break;
 
         case RIGHT:
@@ -175,11 +173,11 @@ void Snake::updatePosition() {
                 headX = 0;
             head = map[headY][headX];
 
-            cout << "snakeMove -> right.\n";
+            cout << "Snake::updatePosition -> right.\n";
             break;
 
         default:
-            std::cerr << "Game -> failed to calculate new position.\n";
+            std::cerr << "Snake::updatePosition -> failed to calculate new position.\n";
     }
 }
 

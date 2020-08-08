@@ -6,7 +6,7 @@
 #define SNAKE_MAP_H
 
 
-#include "View.h"
+#include "Rect.h"
 #include "Field.h"
 #include "Snake.h"
 
