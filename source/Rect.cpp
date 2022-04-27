@@ -31,9 +31,12 @@ void Rect::setTransparency(int transparency) {
 void Rect::draw() {
     rect = {positionX, positionY, width, height};
 
-    SDL_SetRenderDrawBlendMode(Window::renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetRenderDrawColor(Window::renderer, r, g, b, transparency);
-    SDL_RenderFillRect(Window::renderer, &rect);
+    if (SDL_SetRenderDrawBlendMode(Window::renderer, SDL_BLENDMODE_BLEND) == -1)
+        cerr << "Rect::draw -> failed to set blend mode.\n";
+    if (SDL_SetRenderDrawColor(Window::renderer, r, g, b, transparency) == -1)
+        cerr << "Rect::draw -> failed to set rect color.\n";
+    if (SDL_RenderFillRect(Window::renderer, &rect) == -1)
+        cerr << "Rect::draw -> failed to render rect.\n";
 }
 
 void Rect::setPosition(int positionX, int positionY) {

@@ -37,7 +37,8 @@ Image::Image(int width, int height) : Rect(width, height) {
 void Image::draw() {
     Rect::draw();
     if (texture)
-        SDL_RenderCopy(Window::renderer, texture, nullptr, &rect);
+        if (SDL_RenderCopy(Window::renderer, texture, nullptr, &rect) == -1)
+            cerr << "Image::draw -> failed to render image.\n";
 }
 
 Image::~Image() {

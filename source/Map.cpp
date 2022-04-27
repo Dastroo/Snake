@@ -4,7 +4,6 @@
 
 #include <random>
 #include "../headers/Map.h"
-#include "../headers/Snake.h"
 
 Map::Map() {
 

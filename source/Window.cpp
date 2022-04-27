@@ -95,5 +95,6 @@ void Window::pollEvents(SDL_Event &event) {
 void Window::clear() const {
     SDL_RenderPresent(renderer);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-    SDL_RenderClear(renderer);
+    if (SDL_RenderClear(renderer) == -1)
+        cerr << "Window::clear -> failed to clear renderer.\n";
 }
